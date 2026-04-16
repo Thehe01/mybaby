@@ -1,0 +1,13 @@
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and Save
+        run: |
+          docker pull arangodb:3.12.4
+          docker save arangodb:3.12.4 > arangodb.tar
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: arangodb-image
+          path: arangodb.tar
