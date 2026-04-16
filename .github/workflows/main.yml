@@ -1,0 +1,23 @@
+name: Docker Image Puller
+
+on:
+  workflow_dispatch: # 允许手动点击运行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Docker Image
+        run: |
+          docker pull arangodb:3.12.4
+          
+      - name: Save Image to Tar
+        run: |
+          docker save arangodb:3.12.4 > arangodb.tar
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: arangodb-image # 下载时的文件名
+          path: arangodb.tar
+          retention-days: 1 # 只保存1天，省空间
